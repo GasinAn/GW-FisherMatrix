@@ -30,6 +30,6 @@ h_F_5 = h_F_5.subs(A_5, FRAC(743,168)-FRAC(33,4)*eta)
 h_F_5 = h_F_5.subs(B_5, FRAC(27,5)*(4*pi-beta))
 h_F_5 = h_F_5.subs(C_5, 18*epsilon*(FRAC(3058673,1016064)-FRAC(5429,4032)*eta
                         -FRAC(617,96)*eta**2-sigma))
-for n in range(1,7):
-    exec(f'h_F_{n}=h_F_{n}.subs(v,(pi*M*f)**FRAC(1,3))')
+for n in range(1,8):
+    exec(f'h_F_{n}=h_F_{n}.subs(v,(pi*M/eta**FRAC(3,5)*f)**FRAC(1,3))')
 
