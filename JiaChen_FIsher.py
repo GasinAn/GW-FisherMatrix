@@ -1,5 +1,5 @@
+from astropy.constants import G, M_sun, c
 from sympy import *
-
 
 PARAMS = ('A_4', 'B_4', 'C_4', 'A_5', 'B_5', 'C_5', 'M', 'S_0',
           'beta', 'epsilon', 'eta', 'sigma', 'f', 'f_0', 'h_F', 'v')
@@ -32,4 +32,13 @@ h_F_5 = h_F_5.subs(C_5, 18*epsilon*(FRAC(3058673,1016064)-FRAC(5429,4032)*eta
                         -FRAC(617,96)*eta**2-sigma))
 for n in range(1,8):
     exec(f'h_F_{n}=h_F_{n}.subs(v,(pi*M/eta**FRAC(3,5)*f)**FRAC(1,3))')
+    
+for n in range(1,8):
+    exec(f'h_F_{n}=h_F_{n}.subs(f_0,10)')
+    exec(f'h_F_{n}=h_F_{n}.subs(M,0.25**(3/5)*2.8*(M_sun*G/c**3).value)')
+    exec(f'h_F_{n}=h_F_{n}.subs(eta,0.25)')
+    exec(f'h_F_{n}=h_F_{n}.subs(beta,0)')
+    exec(f'h_F_{n}=h_F_{n}.subs(sigma,0)')
+    exec(f'h_F_{n}=h_F_{n}.subs(epsilon,1)')
+    
 
