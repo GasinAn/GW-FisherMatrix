@@ -16,7 +16,7 @@ frac = Rational
 
 
 S = frac(1,5)*S_0*((f_0/f)**4+2+2*(f/f_0)**2)
-# SNR = (20*A**2*S_0**(-1)*f_0**(-frac(4,3))*0.28390566697806996)
+# SNR = (20*A**2*S_0**(-1)*f_0**(-frac(4,3))*I_7)
 
 h_F_1 = (1)*h_F
 h_F_2 = (2*pi*I*(f/f_0))*h_F
@@ -62,7 +62,9 @@ for n in range(1,8):
     exec(f'h_F_{n}=h_F_{n}.subs(sigma,0)')
     exec(f'h_F_{n}=h_F_{n}.subs(epsilon,epsilon_value)')
 
-I_7 = 0.28390566697806996
+I_7 = 0.28390566003167744
+# I_7 = 0.2839048939137505
+# I_7 = 0.28390063547499106
 for i in range(1,8):
     for j in range(i,8):
         exec(f'prod = (conj(h_F_{i})*h_F_{j}+h_F_{i}*conj(h_F_{j}))/S')
