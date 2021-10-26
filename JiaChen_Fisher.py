@@ -16,7 +16,7 @@ frac = Rational
 
 
 S = frac(1,5)*S_0*((f_0/f)**4+2+2*(f/f_0)**2)
-#SNR = (20*A**2*S_0**(-1)*f_0**(-frac(4,3))*0.28390566697806996)
+# SNR = (20*A**2*S_0**(-1)*f_0**(-frac(4,3))*0.28390566697806996)
 
 h_F_1 = (1)*h_F
 h_F_2 = (2*pi*I*(f/f_0))*h_F
@@ -41,15 +41,26 @@ h_F_5 = h_F_5.subs(C_5, 18*epsilon*(frac(3058673,1016064)-frac(5429,4032)*eta
 for n in range(1,8):
     exec(f'h_F_{n}=h_F_{n}.subs(v,(pi*M/eta**frac(3,5)*f)**frac(1,3))')
 
+eta_value = 0.25
+M_value = 2.8*(M_sun*G/c**3).value
+# eta_value = 0.1077254539858418
+# M_value = 11.4*(M_sun*G/c**3).value
+# eta_value = 0.25
+# M_value = 20*(M_sun*G/c**3).value
+
+epsilon_value = 1
+# epsilon_value = 0
+# epsilon_value = -1
+
 S = S.subs(f_0, 10)
-#SNR = SNR.subs(f_0, 10)
+# SNR = SNR.subs(f_0, 10)
 for n in range(1,8):
     exec(f'h_F_{n}=h_F_{n}.subs(f_0,70)')
-    exec(f'h_F_{n}=h_F_{n}.subs(M,0.25**(3/5)*2.8*(M_sun*G/c**3).value)')
-    exec(f'h_F_{n}=h_F_{n}.subs(eta,0.25)')
+    exec(f'h_F_{n}=h_F_{n}.subs(M,eta_value**(3/5)*M_value)')    
+    exec(f'h_F_{n}=h_F_{n}.subs(eta,eta_value)')
     exec(f'h_F_{n}=h_F_{n}.subs(beta,0)')
     exec(f'h_F_{n}=h_F_{n}.subs(sigma,0)')
-    exec(f'h_F_{n}=h_F_{n}.subs(epsilon,1)')
+    exec(f'h_F_{n}=h_F_{n}.subs(epsilon,epsilon_value)')
 
 I_7 = 0.28390566697806996
 for i in range(1,8):
