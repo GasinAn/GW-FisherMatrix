@@ -9,5 +9,5 @@ def I_7(f):
 
 
 print(quad(I_7, 1/7, (6**(3/2)*m.pi*2.8*(M_sun*G/c**3).value*10)**(-1)))
-print(quad(I_7, 1/7, (6**(3/2)*m.pi*11.4*(M_sun*G/c**3).value*10)**(-1)))
+# print(quad(I_7, 1/7, (6**(3/2)*m.pi*11.4*(M_sun*G/c**3).value*10)**(-1)))
 # print(quad(I_7, 1/7, (6**(3/2)*m.pi*20*(M_sun*G/c**3).value*10)**(-1)))
