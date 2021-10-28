@@ -1,5 +1,9 @@
 from math import pi
 
+import numpy as np
+from astropy.constants import G, M_sun, c
+from scipy.integrate import quad
+
 
 def prod_11(f):
     return 3794.28945435226/(f**(7/3)*(f**2/50 + 2 + 10000/f**4))
@@ -85,3 +89,17 @@ def prod_67(f):
 def prod_77(f):
     return 12248421.1815046/(pi**(2/3)*f**3*(f**2/50 + 2 + 10000/f**4))
 
+
+Gamma = np.empty((7,7))
+f_max = (6**(3/2)*pi*11.4*(M_sun*G/c**3).value*10)**(-1)
+for i in range(1,8):
+    for j in range(i,8):
+        exec(f'quad_prod_ij = 2*quad(prod_{i}{j}, 1/7, f_max)[0]')
+        Gamma[i-1,j-1] = quad_prod_ij
+        Gamma[j-1,i-1] = quad_prod_ij
+
+with open(__file__[:-3]+'_Gamma.txt', 'w') as f:
+    for i in range(7):
+        for j in range(7):
+            f.write(str(Gamma[i,j])+' ')
+        f.write('\n')
