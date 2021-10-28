@@ -91,10 +91,10 @@ def prod_77(f):
 
 
 Gamma = np.empty((7,7))
-f_max = (6**(3/2)*pi*20*(M_sun*G/c**3).value*70)**(-1)
+f_max = (6**(3/2)*pi*20*(M_sun*G/c**3).value)**(-1)
 for i in range(1,8):
     for j in range(i,8):
-        exec(f'quad_prod_ij = 2*quad(prod_{i}{j}, 1/7, f_max)[0]')
+        exec(f'quad_prod_ij = 2*quad(prod_{i}{j}, 10, f_max)[0]')
         Gamma[i-1,j-1] = quad_prod_ij
         Gamma[j-1,i-1] = quad_prod_ij
 
