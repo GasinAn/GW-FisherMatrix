@@ -42,11 +42,11 @@ for n in range(1,8):
     exec(f'h_F_{n}=h_F_{n}.subs(v,(pi*M/eta**frac(3,5)*f)**frac(1,3))')
 
 eta_value = (1.4*1.4)/(1.4+1.4)**2
-M_value = (1.4*1.4)*(M_sun*G/c**3).value
+M_value = (1.4+1.4)*(M_sun*G/c**3).value
 # eta_value = (1.4*10)/(1.4+10)**2
-# M_value = (1.4*10)*(M_sun*G/c**3).value
+# M_value = (1.4+10)*(M_sun*G/c**3).value
 # eta_value = (10*10)/(10+10)**2
-# M_value = (10*10)*(M_sun*G/c**3).value
+# M_value = (10+10)*(M_sun*G/c**3).value
 
 epsilon_value = 1
 # epsilon_value = 0
