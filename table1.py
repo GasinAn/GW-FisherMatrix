@@ -44,7 +44,7 @@ N_2pn = integrate(
     F
     *(5*pi*(eta**frac(3,5)*M)**2/96)
     *(pi*eta**frac(3,5)*M*F)**frac(-11,3)
-    *(frac(3058673,1016064)+frac(5429,1008)*eta+frac(617,144)*eta**2)
+    *(frac(3058673,1016064)+frac(5429,1008)*eta+frac(617,144)*eta**2) # FIXME: please check this expression
     *(pi*M*F)**frac(4,3),
     (F, F_min, F_max)
 )
