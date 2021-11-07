@@ -13,17 +13,17 @@ def cycleGWfromdFdtPN(m1, m2, f_min, f_max=None, z=0):
     eta = m1*m2 / M**2
     chirpM = eta ** (3/5) * M
     
-    dfdtPNList = {
-        'Newtonian':[0, -1], # When we use delta N formula, should use -1 (not 1) 
-        '1PN':[1, -(743/336 + 11/4 * eta)], 
-        'Tail': [1.5, 4 * np.pi], # set beta = 0, also Tail term
-        'SO with beta=1': [1.5, -1], # set beta = 1
-        '2PN': [2, (34103/18144 + 13661/2016 * eta + 59/18 * eta**2)], # set sigma=0
-        'SS with sigma=1': [2, 1] # set sigma=1
+    InvDfdtPNList = {
+        'Newtonian':[0, 1], # When we use delta N formula, should use -1 (not 1) 
+        '1PN':[1, (743/336 + 11/4 * eta)], 
+        'Tail': [1.5, - 4 * np.pi], # set beta = 0, also Tail term
+        'SO with beta=1': [1.5, 1], # set beta = 1
+        '2PN': [2, (3058673/1016064 + 5429/1008 * eta + 617/144 * eta**2)], # set sigma=0
+        'SS with sigma=1': [2, -1] # set sigma=1
         }
 
     if f_max == None:
-        f_max = 1/np.pi * M * M2T * 6**(2/3)
+        f_max = 1/np.pi * M * M2T * 6**(3/2)
         
     f = np.logspace(np.log10(f_min), np.log10(f_max), 1000, endpoint=True)
     u = np.pi * M * M2T * f
@@ -31,9 +31,9 @@ def cycleGWfromdFdtPN(m1, m2, f_min, f_max=None, z=0):
     dfdtNewtonian = 96/(5*np.pi*chirpM**2 * M2T**2) * (np.pi * chirpM * M2T * f)**(11/3)
     
     results = {}
-    for mode in dfdtPNList.keys():
-        pn, term = dfdtPNList[mode]
-        DeltaN = np.trapz(-f * term * u**(2/3 * pn)/dfdtNewtonian, f)
+    for mode in InvDfdtPNList.keys():
+        pn, term = InvDfdtPNList[mode]
+        DeltaN = np.trapz(f * term * u**(2/3 * pn)/dfdtNewtonian, f)
         results[mode] = DeltaN
 
     return results
