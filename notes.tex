@@ -1,0 +1,124 @@
+\documentclass[a3paper]{ctexart}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{syntonly}
+\usepackage{textcomp}
+\usepackage{verbatim}
+\usepackage{ulem}
+%\syntaxonly
+%\geometry{a5paper}
+\hyphenation{}
+\normalem
+\hypersetup{
+    colorlinks,
+    linkcolor=blue,
+    filecolor=pink,
+    urlcolor=cyan,
+    citecolor=red,
+}
+\def\b{\boldsymbol}
+\def\d{\mathrm{d}}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\atanxy}{atan2}
+\newtheorem{definition}{定义}
+\newtheorem{theorem}{定理}
+\title{LISA}
+\author{GasinAn}
+\begin{document}
+    \maketitle
+    \section{Monochromatic Sources}
+    \begin{equation*}
+        \Gamma_{ij}=\frac{3}{4}S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}\left[\partial_i A_\alpha(t)\partial_j A_\alpha(t)+A^2_\alpha(t)\partial_i \chi_\alpha(t)\partial_j \chi_\alpha(t)\right]\,\d t.
+    \end{equation*}
+    \begin{equation*}
+        A_\alpha(t)=\left[A_+^2F_{+,\alpha}^2(t)+A_\times^2F_{\times,\alpha}^2(t)\right]^{1/2}.
+    \end{equation*}
+    \begin{equation*}
+        \chi_\alpha(t)=2\pi f_0t+\varphi_0+\varphi_{\text{p},\alpha}(t)+\varphi_\text{D}(t).
+    \end{equation*}
+    \begin{equation*}
+        \varphi_{\text{p},\alpha}(t)=\arctan\left(-\frac{A_\times F_{\times,\alpha}(t)}{A_+F_{+,\alpha}(t)}\right).
+    \end{equation*}
+    \begin{equation*}
+        \varphi_\text{D}(t)=2\pi f_0c^{-1}R\sin\bar{\theta}_\text{S}\cos\left[\bar{\phi}(t)-\bar{\phi}_\text{S}\right].
+    \end{equation*}
+    \begin{equation*}
+        A_+=2e^{\ln\mathcal{A}}\left\{1+\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right]^2\right\}.
+    \end{equation*}
+    \begin{equation*}
+        A_\times=-4e^{\ln\mathcal{A}}\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right].
+    \end{equation*}
+    \begin{equation*}
+        F_{+,\text{I}}(\theta_\text{S},\phi_\text{S},\psi_\text{S})=\frac{1}{2}(1+\cos^2\theta_\text{S})\cos2\phi_\text{S}\cos2\psi_\text{S}-\cos\theta_\text{S}\sin2\phi_\text{S}\sin2\psi_\text{S}.
+    \end{equation*}
+    \begin{equation*}
+        F_{\times,\text{I}}(\theta_\text{S},\phi_\text{S},\psi_\text{S})=\frac{1}{2}(1+\cos^2\theta_\text{S})\cos2\phi_\text{S}\sin2\psi_\text{S}-\cos\theta_\text{S}\sin2\phi_\text{S}\cos2\psi_\text{S}.
+    \end{equation*}
+    \begin{equation*}
+        F_{+,\text{II}}(\theta_\text{S},\phi_\text{S},\psi_\text{S})=\frac{1}{2}(1+\cos^2\theta_\text{S})\sin2\phi_\text{S}\cos2\psi_\text{S}+\cos\theta_\text{S}\cos2\phi_\text{S}\sin2\psi_\text{S}.
+    \end{equation*}
+    \begin{equation*}
+        F_{\times,\text{II}}(\theta_\text{S},\phi_\text{S},\psi_\text{S})=\frac{1}{2}(1+\cos^2\theta_\text{S})\sin2\phi_\text{S}\sin2\psi_\text{S}+\cos\theta_\text{S}\cos2\phi_\text{S}\cos2\psi_\text{S}.
+    \end{equation*}
+    \begin{equation*}
+        \cos\theta_\text{S}=\frac{1}{2}\cos\bar{\theta}_\text{S}-\frac{\sqrt{3}}{2}\sin\bar{\theta}_\text{S}\cos\left[\bar{\phi}(t)-\bar{\phi}_\text{S}\right].
+    \end{equation*}
+    \begin{equation*}
+        \phi_\text{S}=2\pi t/T+\alpha_0+\arctan\left\{\frac{\sqrt{3}\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_\text{S}\cos\left[\bar{\phi}(t)-\bar{\phi}_\text{S}\right]}{2\sin\bar{\theta}_\text{S}\sin\left[\bar{\phi}(t)-\bar{\phi}_\text{S}\right]}\right\}.
+    \end{equation*}
+    \begin{equation*}
+        \psi_\text{S}=\arctan\left\{\frac{\frac{1}{2}\cos\bar{\theta}_L-\frac{\sqrt{3}}{2}\sin\bar{\theta}_L\cos\left[\bar{\phi}(t)-\bar{\phi}_L\right]-\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right]\cos\theta_\text{S}}{\frac{1}{2}\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\sin(\bar{\phi}_L-\bar{\phi}_\text{S})-\frac{\sqrt{3}}{2}(\cos\bar{\theta}_L\sin\bar{\theta}_\text{S}\sin\bar{\phi}_\text{S}-\cos\bar{\theta}_\text{S}\sin\bar{\theta}_L\sin\bar{\phi}_L)\cos\bar{\phi}(t)-\frac{\sqrt{3}}{2}(\cos\bar{\theta}_\text{S}\sin\bar{\theta}_L\cos\bar{\phi}_L-\cos\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos\bar{\phi}_L)\sin\bar{\phi}(t)}\right\}
+    \end{equation*}
+    \begin{equation*}
+        \bar{\phi}(t)=\bar{\phi}_0+2\pi t/T.
+    \end{equation*}
+    \begin{equation*}
+        \alpha_0=0,\quad\bar{\phi}_0=0.
+    \end{equation*}
+    \begin{equation*}
+        \Gamma_{1j}=\frac{3}{4}S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}A_\alpha(t)\partial_j A_\alpha(t)\,\d t.
+    \end{equation*}
+    \begin{equation*}
+        \Gamma_{2j}=\frac{3}{4}S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}A^2_\alpha(t)\partial_j \chi_\alpha(t)\,\d t.
+    \end{equation*}
+    \begin{equation*}
+        \Gamma_{3j}=\frac{3}{4}S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}A^2_\alpha(t)2\pi t\partial_j \chi_\alpha(t)\,\d t.
+    \end{equation*}
+    \begin{equation*}
+        \ln\mathcal{A}:=0,\quad\bar{\phi}_0:=0.
+    \end{equation*}
+    \begin{equation*}
+        \frac{\Gamma_{ij}}{\Gamma_{ij,\ln\mathcal{A}=0}}=\frac{(S/N)}{(S/N)_{\ln\mathcal{A}=0}}=\frac{10}{(S/N)_{\ln\mathcal{A}=0}}.
+    \end{equation*}
+    \begin{equation*}
+        (S/N)^2=2S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}\left[\int_{-\infty}^{\infty}e^{2\pi i ft_1}h_\alpha(t)\,\d t_1\right]\left[\int_{-\infty}^{\infty}e^{-2\pi i ft_2}h_\alpha(t)\,\d t_2\right]\,\d f.
+    \end{equation*}
+    \begin{equation*}
+        (S/N)^2=2S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}\tilde{h}_\alpha(f)\tilde{h}_\alpha^*(f)\,\d f.
+    \end{equation*}
+    \begin{equation*}
+        (S/N)^2=2S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}h_\alpha^2(t)\,\d t.
+    \end{equation*}
+\end{document}
+\begin{equation*}
+    h_\alpha(t)=\frac{\sqrt{3}}{2}A_\alpha(t)\cos\chi_\alpha(t).
+\end{equation*}
+\begin{equation*}
+    (S/N)^2=2S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}\tilde{h}_\alpha(f)\left[\int_{-\infty}^{\infty}e^{-2\pi i ft}h_\alpha(t)\,\d t\right]\,\d f.
+\end{equation*}
+\begin{equation*}
+    (S/N)^2=2S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\tilde{h}_\alpha(f)e^{-2\pi i ft}h_\alpha(t)\,\d t\,\d f.
+\end{equation*}
+\begin{equation*}
+    (S/N)^2=2S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}h_\alpha(t)e^{-2\pi i ft}\tilde{h}_\alpha(f)\,\d f\,\d t.
+\end{equation*}
+\begin{equation*}
+    (S/N)^2=2S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}h_\alpha(t)\left[\int_{-\infty}^{\infty}e^{-2\pi i ft}\tilde{h}_\alpha(f)\,\d f\right]\,\d t.
+\end{equation*}
+\begin{equation*}
+    (S/N)^2=2S_n(f_0)^{-1}\sum_{\alpha=\text{I},\text{II}}\int_{-\infty}^{\infty}h_\alpha(t)h_\alpha(t)\,\d t.
+\end{equation*}
