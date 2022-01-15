@@ -1,5 +1,6 @@
 from numpy import *
 from scipy.integrate import *
+from scipy.misc import derivative
 
 c = 299792458
 R = 149597870700
@@ -111,7 +112,7 @@ def func_h_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     varphi_p_I = func_varphi_p_alpha(A_p, A_t, F_p_I, F_t_I)
     varphi_D = func_varphi_D(f_0, bar_theta_S, bar_phi, bar_phi_S)
     chi_I = func_chi_alpha(t, f_0, varphi_p_I, varphi_D)
-    return (sqrt(3)/2)*A_I*cos(chi_I), A_I, chi_I
+    return (sqrt(3)/2)*A_I*cos(chi_I)
 
 def func_h_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     bar_theta_S = arccos(bar_mu_S)
@@ -132,7 +133,7 @@ def func_h_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     varphi_p_II = func_varphi_p_alpha(A_p, A_t, F_p_II, F_t_II)
     varphi_D = func_varphi_D(f_0, bar_theta_S, bar_phi, bar_phi_S)
     chi_II = func_chi_alpha(t, f_0, varphi_p_II, varphi_D)
-    return (sqrt(3)/2)*A_II*cos(chi_II), A_II, chi_II
+    return (sqrt(3)/2)*A_II*cos(chi_II)
 
 def signal2noise(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_integrated(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
@@ -141,5 +142,3 @@ def signal2noise(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
         return h_I**2+h_II**2
     return 2/S_n(f_0)*quad(func_integrated, -1/f_0, 1/f_0, 
                       args=(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L))[0]
-
-print(signal2noise(0.001, 0.3, 0.3, 0.5, 0.5))
