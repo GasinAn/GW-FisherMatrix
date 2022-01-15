@@ -91,7 +91,9 @@ def S_n(f):
         S_n_co = 10**(-46.850)*f**(-2.6)
     return S_n_in+S_n_co
 
-def h_I(t, f_0, bar_theta_S, bar_phi_S, bar_theta_L, bar_phi_L):
+def h_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    bar_theta_S = arccos(bar_mu_S)
+    bar_theta_L = arccos(bar_mu_L)
     bar_phi = func_bar_phi(t)
     theta_S = func_theta_S(bar_theta_S, bar_phi, bar_phi_S)
     Lz = func_Lz(bar_theta_L, bar_phi, bar_phi_L)
@@ -110,7 +112,9 @@ def h_I(t, f_0, bar_theta_S, bar_phi_S, bar_theta_L, bar_phi_L):
     chi_I = func_chi_alpha(t, f_0, varphi_p_I, varphi_D)
     return (sqrt(3)/2)*A_I*cos(chi_I), A_I, chi_I
 
-def h_II(t, f_0, bar_theta_S, bar_phi_S, bar_theta_L, bar_phi_L):
+def h_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    bar_theta_S = arccos(bar_mu_S)
+    bar_theta_L = arccos(bar_mu_L)
     bar_phi = func_bar_phi(t)
     theta_S = func_theta_S(bar_theta_S, bar_phi, bar_phi_S)
     Lz = func_Lz(bar_theta_L, bar_phi, bar_phi_L)
