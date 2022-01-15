@@ -307,13 +307,13 @@ def partial_6_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     delta = func_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)/1e8
     return derivative(func_chi_I_, bar_phi_L, delta)
 
-def partial_0_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_0_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     return 0
 
-def partial_1_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_1_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     return 1
 
-def partial_2_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_2_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     return 2*pi*t
 
 def partial_3_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
@@ -347,3 +347,44 @@ def signal2noise(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
         return h_I**2+h_II**2
     return 2/S_n(f_0)*quad(func_integrated, -1/f_0, 1/f_0, 
                       args=(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L))[0]
+
+def Fisher_matrix(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    Gamma = empty_matrix((7,7))
+    for i in range(0,7-1):
+        for j in range(i+1,7):
+            def func_integrated(t):
+                args = (t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+                A_I = eval(f'func_A_I(*args)')
+                A_I_i = eval(f'partial_{i}_A_I(*args)')
+                A_I_j = eval(f'partial_{j}_A_I(*args)')
+                chi_I_i = eval(f'partial_{i}_chi_I(*args)')
+                chi_I_j = eval(f'partial_{j}_chi_I(*args)')
+                A_II = eval(f'func_A_II(*args)')
+                A_II_i = eval(f'partial_{i}_A_II(*args)')
+                A_II_j = eval(f'partial_{j}_A_II(*args)')
+                chi_II_i = eval(f'partial_{i}_chi_II(*args)')
+                chi_II_j = eval(f'partial_{j}_chi_II(*args)')
+                return (A_I_i*A_I_j+A_I**2*chi_I_i*chi_I_j
+                       +A_II_i*A_II_j+A_II**2*chi_II_i*chi_II_j)
+            Gamma[i,j] = (3/4)/S_n(f_0)*quad(func_integrated, -1/f_0, 1/f_0)[0]
+            Gamma[j,i] = Gamma[i,j]
+    for k in range(7):
+        def func_integrated(t):
+            args = (t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+            A_I = eval(f'func_A_I(*args)')
+            A_I_k = eval(f'partial_{k}_A_I(*args)')
+            chi_I_k = eval(f'partial_{k}_chi_I(*args)')
+            A_II = eval(f'func_A_II(*args)')
+            A_II_k = eval(f'partial_{k}_A_II(*args)')
+            chi_II_k = eval(f'partial_{k}_chi_II(*args)')
+            return (A_I_k**2+A_I**2*chi_I_k**2
+                   +A_II_k**2+A_II**2*chi_II_k**2)
+        Gamma[k,k] = (3/4)/S_n(f_0)*quad(func_integrated, -1/f_0, 1/f_0)[0]
+    return Gamma
+
+def Delta_Omega(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    square_rho = signal2noise(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    Gamma =  Fisher_matrix(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    Gamma = (10**2/square_rho)*Gamma
+    cov = Gamma.I
+    return 2*pi*(sqrt(cov[3,3]*cov[4,4])-cov[3,4])
