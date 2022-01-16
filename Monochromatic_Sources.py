@@ -240,7 +240,9 @@ def partial_1_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     return 1
 
 def partial_2_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    return 2*pi*t
+    def func_chi_I_(f_0_):
+        return func_chi_I(t, f_0_, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_chi_I_, f_0, 1e-8)
 
 def partial_3_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_chi_I_(bar_mu_S_):
@@ -269,7 +271,9 @@ def partial_1_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     return 1
 
 def partial_2_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    return 2*pi*t
+    def func_chi_II_(f_0_):
+        return func_chi_II(t, f_0_, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_chi_II_, f_0, 1e-8)
 
 def partial_3_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_chi_II_(bar_mu_S_):
