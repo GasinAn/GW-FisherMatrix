@@ -296,6 +296,4 @@ def signal2noise(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
         h_I = func_h_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
         h_II = func_h_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
         return h_I**2+h_II**2
-    return 2/S_n(f_0)*quad(func_integrated, -1/f_0, 1/f_0)[0]
-
-print(signal2noise(1e-3,0.3,5.0,-0.2,4.0))
+    return 2*quad(func_integrated, -1/f_0, 1/f_0)[0]
