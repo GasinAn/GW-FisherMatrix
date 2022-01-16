@@ -167,6 +167,130 @@ def func_h_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     chi_II = func_chi_alpha(t, f_0, varphi_p_II, varphi_D)
     return (sqrt(3)/2)*A_II*cos(chi_II)
 
+def partial_0_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return func_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+
+def partial_1_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return 0
+
+def partial_2_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return 0
+
+def partial_3_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_A_I_(bar_mu_S_):
+        return func_A_I(t, f_0, bar_mu_S_, bar_phi_S, bar_mu_L, bar_phi_L)
+    delta = func_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)*1e-8
+    return derivative(func_A_I_, bar_mu_S, delta)
+
+def partial_4_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_A_I_(bar_phi_S_):
+        return func_A_I(t, f_0, bar_mu_S, bar_phi_S_, bar_mu_L, bar_phi_L)
+    delta = func_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)*1e-8
+    return derivative(func_A_I_, bar_phi_S, delta)
+
+def partial_5_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_A_I_(bar_mu_L_):
+        return func_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L_, bar_phi_L)
+    delta = func_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)*1e-8
+    return derivative(func_A_I_, bar_mu_L, delta)
+
+def partial_6_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_A_I_(bar_phi_L_):
+        return func_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_)
+    delta = func_A_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)*1e-8
+    return derivative(func_A_I_, bar_phi_L, delta)
+
+def partial_0_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return func_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+
+def partial_1_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return 0
+
+def partial_2_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return 0
+
+def partial_3_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_A_II_(bar_mu_S_):
+        return func_A_II(t, f_0, bar_mu_S_, bar_phi_S, bar_mu_L, bar_phi_L)
+    delta = func_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)*1e-8
+    return derivative(func_A_II_, bar_mu_S, delta)
+
+def partial_4_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_A_II_(bar_phi_S_):
+        return func_A_II(t, f_0, bar_mu_S, bar_phi_S_, bar_mu_L, bar_phi_L)
+    delta = func_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)*1e-8
+    return derivative(func_A_II_, bar_phi_S, delta)
+
+def partial_5_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_A_II_(bar_mu_L_):
+        return func_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L_, bar_phi_L)
+    delta = func_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)*1e-8
+    return derivative(func_A_II_, bar_mu_L, delta)
+
+def partial_6_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_A_II_(bar_phi_L_):
+        return func_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_)
+    delta = func_A_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)*1e-8
+    return derivative(func_A_II_, bar_phi_L, delta)
+
+def partial_0_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return 0
+
+def partial_1_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return 1
+
+def partial_2_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return 2*pi*t
+
+def partial_3_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_chi_I_(bar_mu_S_):
+        return func_chi_I(t, f_0, bar_mu_S_, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_chi_I_, bar_mu_S, 1e-8)
+
+def partial_4_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_chi_I_(bar_phi_S_):
+        return func_chi_I(t, f_0, bar_mu_S, bar_phi_S_, bar_mu_L, bar_phi_L)
+    return derivative(func_chi_I_, bar_phi_S, 1e-8)
+
+def partial_5_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_chi_I_(bar_mu_L_):
+        return func_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L_, bar_phi_L)
+    return derivative(func_chi_I_, bar_mu_L, 1e-8)
+
+def partial_6_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_chi_I_(bar_phi_L_):
+        return func_chi_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_)
+    return derivative(func_chi_I_, bar_phi_L, 1e-8)
+
+def partial_0_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return 0
+
+def partial_1_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return 1
+
+def partial_2_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    return 2*pi*t
+
+def partial_3_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_chi_II_(bar_mu_S_):
+        return func_chi_II(t, f_0, bar_mu_S_, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_chi_II_, bar_mu_S, 1e-8)
+
+def partial_4_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_chi_II_(bar_phi_S_):
+        return func_chi_II(t, f_0, bar_mu_S, bar_phi_S_, bar_mu_L, bar_phi_L)
+    return derivative(func_chi_II_, bar_phi_S, 1e-8)
+
+def partial_5_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_chi_II_(bar_mu_L_):
+        return func_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L_, bar_phi_L)
+    return derivative(func_chi_II_, bar_mu_L, 1e-8)
+
+def partial_6_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_chi_II_(bar_phi_L_):
+        return func_chi_II(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_)
+    return derivative(func_chi_II_, bar_phi_L, 1e-8)
+
 def signal2noise(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_integrated(t):
         h_I = func_h_I(t, f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
