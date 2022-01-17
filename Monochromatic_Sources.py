@@ -38,14 +38,14 @@ def func_nLz(bar_theta_L, bar_theta_S, bar_phi_L, bar_phi_S, bar_phi):
                         *(cos(bar_theta_L)*sin(bar_theta_S)*sin(bar_phi_S)
                          -cos(bar_theta_S)*sin(bar_theta_L)*sin(bar_phi_L))
             -(sqrt(3)/2)*sin(bar_phi)
-                        *(cos(bar_theta_S)*sin(bar_theta_L)*cos(bar_phi_S)
-                         -cos(bar_theta_L)*sin(bar_theta_S)*cos(bar_phi_L)))
+                        *(cos(bar_theta_S)*sin(bar_theta_L)*cos(bar_phi_L)
+                         -cos(bar_theta_L)*sin(bar_theta_S)*cos(bar_phi_S)))
 
 def func_A_p(Ln):
     return 2*exp(ln_A)*(1+Ln**2)
 
 def func_A_t(Ln):
-    return -2*exp(ln_A)*Ln
+    return -4*exp(ln_A)*Ln
 
 def func_F_p_I(theta_S, phi_S, psi_S):
     return (cos(2*phi_S)*cos(2*psi_S)*(1+cos(theta_S)**2)/2
@@ -53,7 +53,7 @@ def func_F_p_I(theta_S, phi_S, psi_S):
 
 def func_F_t_I(theta_S, phi_S, psi_S):
     return (cos(2*phi_S)*sin(2*psi_S)*(1+cos(theta_S)**2)/2
-           -sin(2*phi_S)*cos(2*psi_S)*cos(theta_S))
+           +sin(2*phi_S)*cos(2*psi_S)*cos(theta_S))
 
 def func_F_p_II(theta_S, phi_S, psi_S):
     return (sin(2*phi_S)*cos(2*psi_S)*(1+cos(theta_S)**2)/2
@@ -61,7 +61,7 @@ def func_F_p_II(theta_S, phi_S, psi_S):
 
 def func_F_t_II(theta_S, phi_S, psi_S):
     return (sin(2*phi_S)*sin(2*psi_S)*(1+cos(theta_S)**2)/2
-           +cos(2*phi_S)*cos(2*psi_S)*cos(theta_S))
+           -cos(2*phi_S)*cos(2*psi_S)*cos(theta_S))
 
 def func_theta_S(bar_theta_S, bar_phi, bar_phi_S):
     return arccos(
