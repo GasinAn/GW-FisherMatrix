@@ -1,5 +1,4 @@
 from numpy import *
-from numpy.matlib import empty as empty_matrix
 from scipy.integrate import *
 from scipy.misc import derivative
 
@@ -303,7 +302,7 @@ def signal2noise(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     return 2*quad(func_integrated, -1/f_0, 1/f_0)[0]
 
 def Fisher_matrix(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    Gamma = empty_matrix((7,7))
+    Gamma = empty((7,7))
     for i in range(7):
         for j in range(7):
             def func_integrated(t):
