@@ -342,3 +342,18 @@ def Fisher_matrix(f_0, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
                        +A_II_i*A_II_j+A_II**2*(chi_II_i*chi_II_j))
             Gamma[i,j] = (3/4)*quad(func_integrated, -1/f_0, 1/f_0)[0]
     return Gamma
+
+def plot_fig_3():
+    t = linspace(3e7/10000, 3e7, 10000)
+    A_I = empty_like(t)
+    A_II = empty_like(t)
+    for i in range(10000):
+        A_I[i] = func_A_I(t[i], 1e-3, 0.3, 5.0, -0.2, 4.0)
+        A_II[i] = func_A_II(t[i], 1e-3, 0.3, 5.0, -0.2, 4.0)
+    from matplotlib import pyplot as plt
+    plt.plot(t, A_I)
+    plt.plot(t, A_II)
+    plt.legend(('A_I', 'A_II'))
+    plt.show()
+
+plot_fig_3()
