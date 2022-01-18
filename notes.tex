@@ -71,7 +71,7 @@
         \phi_\text{S}=\alpha_0+2\pi t/T+\arctan\left\{\frac{\sqrt{3}\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_\text{S}\cos\left[\bar{\phi}(t)-\bar{\phi}_\text{S}\right]}{2\sin\bar{\theta}_\text{S}\sin\left[\bar{\phi}(t)-\bar{\phi}_\text{S}\right]}\right\}.
     \end{equation*}
     \begin{equation*}
-        \psi_\text{S}=\arctan\left\{\frac{\frac{1}{2}\cos\bar{\theta}_L-\frac{\sqrt{3}}{2}\sin\bar{\theta}_L\cos\left[\bar{\phi}(t)-\bar{\phi}_L\right]-\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right]\cos\theta_\text{S}}{\frac{1}{2}\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\sin(\bar{\phi}_L-\bar{\phi}_\text{S})-\frac{\sqrt{3}}{2}(\cos\bar{\theta}_L\sin\bar{\theta}_\text{S}\sin\bar{\phi}_\text{S}-\cos\bar{\theta}_\text{S}\sin\bar{\theta}_L\sin\bar{\phi}_L)\cos\bar{\phi}(t)-\frac{\sqrt{3}}{2}(\cos\bar{\theta}_\text{S}\sin\bar{\theta}_L\cos\bar{\phi}_L-\cos\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos\bar{\phi}_S)\sin\bar{\phi}(t)}\right\}
+        \psi_\text{S}=\arctan\left\{\frac{\frac{1}{2}\cos\bar{\theta}_L-\frac{\sqrt{3}}{2}\sin\bar{\theta}_L\cos\left[\bar{\phi}(t)-\bar{\phi}_L\right]-\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right]\cos\theta_\text{S}}{\frac{1}{2}\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\sin(\bar{\phi}_L-\bar{\phi}_\text{S})-\frac{\sqrt{3}}{2}(\cos\bar{\theta}_L\sin\bar{\theta}_\text{S}\sin\bar{\phi}_\text{S}-\cos\bar{\theta}_\text{S}\sin\bar{\theta}_L\sin\bar{\phi}_L)\cos\bar{\phi}(t)-\frac{\sqrt{3}}{2}(\cos\bar{\theta}_\text{S}\sin\bar{\theta}_L\cos\bar{\phi}_L-\cos\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos\bar{\phi}_S)\sin\bar{\phi}(t)}\right\}.
     \end{equation*}
     \begin{equation*}
         \bar{\phi}(t)=\bar{\phi}_0+2\pi t/T.
@@ -111,13 +111,7 @@
         \tilde{h}_\alpha(f)=\frac{\sqrt{3}}{2}\Lambda_\alpha(t)\mathcal{A}f^{-7/6}e^{i[\Psi(f)-\varphi_{\text{p},\alpha}(t)+\varphi_\text{D}(t)]}.
     \end{equation*}
     \begin{equation*}
-        \Lambda_\alpha(t)=A_\alpha(t)/A(t).
-    \end{equation*}
-    \begin{equation*}
-        A_\alpha(t)=\left[A_+^2F_{+,\alpha}^2(t)+A_\times^2F_{\times,\alpha}^2(t)\right]^{1/2}.
-    \end{equation*}
-    \begin{equation*}
-        A(t)=2\frac{M_1M_2(1+z)}{rD_\text{L}}.
+        \Lambda_\alpha(t)=\left[\Lambda_+^2F_{+,\alpha}^2(t)+\Lambda_\times^2F_{\times,\alpha}^2(t)\right]^{1/2}.
     \end{equation*}
     \begin{equation*}
         \mathcal{A}=(5/96)^{1/2}\pi^{-2/3}[\mathcal{M}(1+z)]^{5/6}D_\text{L}^{-1}.
@@ -132,10 +126,10 @@
         \varphi_\text{D}(t)=2\pi fc^{-1}R\sin\bar{\theta}_\text{S}\cos\left[\bar{\phi}(t)-\bar{\phi}_\text{S}\right].
     \end{equation*}
     \begin{equation*}
-        A_+=2\frac{M_1M_2}{rD}\left\{1+\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right]^2\right\}.
+        \Lambda_+=1+\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right]^2.
     \end{equation*}
     \begin{equation*}
-        A_\times=-4\frac{M_1M_2}{rD}\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right].
+        \Lambda_\times=-2\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right].
     \end{equation*}
     \begin{equation*}
         F_{+,\text{I}}(\theta_\text{S},\phi_\text{S},\psi_\text{S})=\frac{1}{2}(1+\cos^2\theta_\text{S})\cos2\phi_\text{S}\cos2\psi_\text{S}-\cos\theta_\text{S}\sin2\phi_\text{S}\sin2\psi_\text{S}.
@@ -156,7 +150,7 @@
         \phi_\text{S}=\alpha_0+2\pi t/T+\arctan\left\{\frac{\sqrt{3}\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_\text{S}\cos\left[\bar{\phi}(t)-\bar{\phi}_\text{S}\right]}{2\sin\bar{\theta}_\text{S}\sin\left[\bar{\phi}(t)-\bar{\phi}_\text{S}\right]}\right\}.
     \end{equation*}
     \begin{equation*}
-        \psi_\text{S}=\arctan\left\{\frac{\frac{1}{2}\cos\bar{\theta}_L-\frac{\sqrt{3}}{2}\sin\bar{\theta}_L\cos\left[\bar{\phi}(t)-\bar{\phi}_L\right]-\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right]\cos\theta_\text{S}}{\frac{1}{2}\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\sin(\bar{\phi}_L-\bar{\phi}_\text{S})-\frac{\sqrt{3}}{2}(\cos\bar{\theta}_L\sin\bar{\theta}_\text{S}\sin\bar{\phi}_\text{S}-\cos\bar{\theta}_\text{S}\sin\bar{\theta}_L\sin\bar{\phi}_L)\cos\bar{\phi}(t)-\frac{\sqrt{3}}{2}(\cos\bar{\theta}_\text{S}\sin\bar{\theta}_L\cos\bar{\phi}_L-\cos\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos\bar{\phi}_S)\sin\bar{\phi}(t)}\right\}
+        \psi_\text{S}=\arctan\left\{\frac{\frac{1}{2}\cos\bar{\theta}_L-\frac{\sqrt{3}}{2}\sin\bar{\theta}_L\cos\left[\bar{\phi}(t)-\bar{\phi}_L\right]-\left[\cos\bar{\theta}_L\cos\bar{\theta}_\text{S}+\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos(\bar{\phi}_L-\bar{\phi}_\text{S})\right]\cos\theta_\text{S}}{\frac{1}{2}\sin\bar{\theta}_L\sin\bar{\theta}_\text{S}\sin(\bar{\phi}_L-\bar{\phi}_\text{S})-\frac{\sqrt{3}}{2}(\cos\bar{\theta}_L\sin\bar{\theta}_\text{S}\sin\bar{\phi}_\text{S}-\cos\bar{\theta}_\text{S}\sin\bar{\theta}_L\sin\bar{\phi}_L)\cos\bar{\phi}(t)-\frac{\sqrt{3}}{2}(\cos\bar{\theta}_\text{S}\sin\bar{\theta}_L\cos\bar{\phi}_L-\cos\bar{\theta}_L\sin\bar{\theta}_\text{S}\cos\bar{\phi}_S)\sin\bar{\phi}(t)}\right\}.
     \end{equation*}
     \begin{equation*}
         \bar{\phi}(t)=\bar{\phi}_0+2\pi t/T.
