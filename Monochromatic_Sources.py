@@ -5,8 +5,8 @@ from scipy.misc import derivative
 c = 299792458
 R = 149597870700
 T = sqrt(R**3/(1.3271244e+20/(4*pi**2)))
-varphi_0 = 0
 ln_A = 0
+varphi_0 = 0
 
 def func_A_alpha(A_p, A_t, F_p_alpha, F_t_alpha):
     return sqrt((A_p*F_p_alpha)**2+(A_t*F_t_alpha)**2)
