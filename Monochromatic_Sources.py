@@ -2,9 +2,11 @@ from numpy import *
 from scipy.integrate import *
 from scipy.misc import derivative
 
+M_sun = 1.988409870698051e+30
+G = 6.6743e-11
 c = 299792458
 R = 149597870700
-T = sqrt(R**3/(1.3271244e+20/(4*pi**2)))
+T = sqrt(R**3/((G*M_sun)/(4*pi**2)))
 ln_A = 0
 varphi_0 = 0
 

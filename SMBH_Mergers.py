@@ -2,9 +2,11 @@ from numpy import *
 from scipy.integrate import *
 from scipy.misc import derivative
 
+M_sun = 1.988409870698051e+30
+G = 6.6743e-11
 c = 299792458
 R = 149597870700
-T = sqrt(R**3/(1.3271244e+20/(4*pi**2)))
+T = sqrt(R**3/((G*M_sun)/(4*pi**2)))
 z = 1
 beta = 0
 phi_c = 0
@@ -289,3 +291,58 @@ def partial_9_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
         return func_h_II(*args)
     h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_II_, bar_phi_L, h_II*1e-8)
+
+def signal2noise_I(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    cal_M, mu = cal_M*(M_sun*G/c**3), mu*(M_sun*G/c**3)
+    def func_integrated(f):
+        args = (cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = (f,)+args
+        h_I = func_h_I(*args)
+        return h_I**2
+    M = cal_M**(5/2)/mu**(3/2)
+    f_max = (3**(3/2)*pi*M*(1+z))**(-1)
+    return 4*quad(func_integrated, 0, f_max)[0]
+
+def signal2noise(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    cal_M, mu = cal_M*(M_sun*G/c**3), mu*(M_sun*G/c**3)
+    def func_integrated(f):
+        args = (cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = (f,)+args
+        h_I = func_h_I(*args)
+        h_II = func_h_II(*args)
+        return h_I**2+h_II**2
+    M = cal_M**(5/2)/mu**(3/2)
+    f_max = (3**(3/2)*pi*M*(1+z))**(-1)
+    return 4*quad(func_integrated, 0, f_max)[0]
+
+def Fisher_matrix_I(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    Gamma = empty((10,10))
+    for i in range(10):
+        for j in range(10):
+            def func_integrated(f):
+                args = (cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+                args = (f,)+args
+                h_I_i = eval(f'partial_{i}_h_I(*args)')
+                h_I_j = eval(f'partial_{j}_h_I(*args)')
+                return h_I_i*h_I_j
+            M = cal_M**(5/2)/mu**(3/2)
+            f_max = (3**(3/2)*pi*M*(1+z))**(-1)
+            Gamma[i,j] = 4*quad(func_integrated, 0, f_max)[0]
+    return Gamma
+
+def Fisher_matrix(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    Gamma = empty((10,10))
+    for i in range(10):
+        for j in range(10):
+            def func_integrated(f):
+                args = (cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+                args = (f,)+args
+                h_I_i = eval(f'partial_{i}_h_I(*args)')
+                h_I_j = eval(f'partial_{j}_h_I(*args)')
+                h_II_i = eval(f'partial_{i}_h_II(*args)')
+                h_II_j = eval(f'partial_{j}_h_II(*args)')
+                return h_I_i*h_I_j+h_II_i*h_II_j
+            M = cal_M**(5/2)/mu**(3/2)
+            f_max = (3**(3/2)*pi*M*(1+z))**(-1)
+            Gamma[i,j] = 4*quad(func_integrated, 0, f_max)[0]
+    return Gamma
