@@ -298,7 +298,7 @@ def signal2noise_I(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
         args = (cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
         args = (f,)+args
         h_I = func_h_I(*args)
-        return h_I**2
+        return (abs(h_I)**2)/S_n(f)
     M = cal_M**(5/2)/mu**(3/2)
     f_max = (3**(3/2)*pi*M*(1+z))**(-1)
     return 4*quad(func_integrated, 0, f_max)[0]
@@ -310,7 +310,7 @@ def signal2noise(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
         args = (f,)+args
         h_I = func_h_I(*args)
         h_II = func_h_II(*args)
-        return h_I**2+h_II**2
+        return (abs(h_I)**2+abs(h_II)**2)/S_n(f)
     M = cal_M**(5/2)/mu**(3/2)
     f_max = (3**(3/2)*pi*M*(1+z))**(-1)
     return 4*quad(func_integrated, 0, f_max)[0]
@@ -324,7 +324,7 @@ def Fisher_matrix_I(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
                 args = (f,)+args
                 h_I_i = eval(f'partial_{i}_h_I(*args)')
                 h_I_j = eval(f'partial_{j}_h_I(*args)')
-                return h_I_i*h_I_j
+                return (h_I_i.real*h_I_j.real+h_I_i.imag*h_I_j.imag)/S_n(f)
             M = cal_M**(5/2)/mu**(3/2)
             f_max = (3**(3/2)*pi*M*(1+z))**(-1)
             Gamma[i,j] = 4*quad(func_integrated, 0, f_max)[0]
@@ -341,7 +341,8 @@ def Fisher_matrix(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
                 h_I_j = eval(f'partial_{j}_h_I(*args)')
                 h_II_i = eval(f'partial_{i}_h_II(*args)')
                 h_II_j = eval(f'partial_{j}_h_II(*args)')
-                return h_I_i*h_I_j+h_II_i*h_II_j
+                return (h_I_i.real*h_I_j.real+h_I_i.imag*h_I_j.imag
+                       +h_II_i.real*h_II_j.real+h_II_i.imag*h_II_j.imag)/S_n(f)
             M = cal_M**(5/2)/mu**(3/2)
             f_max = (3**(3/2)*pi*M*(1+z))**(-1)
             Gamma[i,j] = 4*quad(func_integrated, 0, f_max)[0]
