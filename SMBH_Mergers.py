@@ -155,3 +155,137 @@ def func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     varphi_D = func_varphi_D(f, bar_theta_S, bar_phi, bar_phi_S)
     A = (sqrt(3)/2)*Lambda_II*cal_A*f**(-7/6)
     return A*exp(1j*(Psi-varphi_p_II*varphi_D))
+
+def partial_0_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M = cal_M**(5/2)/mu**(3/2)
+    eta = mu/M
+    x = (pi*M*(1+z)*f)**(2/3)
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return (-5/4)*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-2/3)*(
+        1+((55/6)*eta)*x+(8*pi-2*beta)*x**(3/2)
+    )*h_I
+
+def partial_1_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M = cal_M**(5/2)/mu**(3/2)
+    eta = mu/M
+    x = (pi*M*(1+z)*f)**(2/3)
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return (3/4)*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-5/3)*mu*(
+        ((-3715/756)+(55/6)*eta)*x+(24*pi-6*beta)*x**(3/2)
+    )*h_I
+
+def partial_2_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M = cal_M**(5/2)/mu**(3/2)
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return 3*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-5/3)*(pi*M*(1+z)*f)*h_I
+
+def partial_3_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return -1j*h_I
+
+def partial_4_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return 2*pi*1j*f*h_I
+
+def partial_5_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return -h_I
+
+def partial_6_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_h_I_(bar_mu_S_):
+        args = (f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args[3] = bar_mu_S_
+        return func_h_I(*args)
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_h_I_, bar_mu_S, h_I*1e-8)
+
+def partial_7_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_h_I_(bar_phi_S_):
+        args = (f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args[4] = bar_phi_S_
+        return func_h_I(*args)
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_h_I_, bar_phi_S, h_I*1e-8)
+
+def partial_8_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_h_I_(bar_mu_L_):
+        args = (f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args[5] = bar_mu_L_
+        return func_h_I(*args)
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_h_I_, bar_mu_L, h_I*1e-8)
+
+def partial_9_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_h_I_(bar_phi_L_):
+        args = (f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args[6] = bar_phi_L_
+        return func_h_I(*args)
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_h_I_, bar_phi_L, h_I*1e-8)
+
+def partial_0_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M = cal_M**(5/2)/mu**(3/2)
+    eta = mu/M
+    x = (pi*M*(1+z)*f)**(2/3)
+    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return (-5/4)*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-2/3)*(
+        1+((55/6)*eta)*x+(8*pi-2*beta)*x**(3/2)
+    )*h_I
+
+def partial_1_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M = cal_M**(5/2)/mu**(3/2)
+    eta = mu/M
+    x = (pi*M*(1+z)*f)**(2/3)
+    h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return (3/4)*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-5/3)*mu*(
+        ((-3715/756)+(55/6)*eta)*x+(24*pi-6*beta)*x**(3/2)
+    )*h_II
+
+def partial_2_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M = cal_M**(5/2)/mu**(3/2)
+    h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return 3*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-5/3)*(pi*M*(1+z)*f)*h_II
+
+def partial_3_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return -1j*h_II
+
+def partial_4_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return 2*pi*1j*f*h_II
+
+def partial_5_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return -h_II
+
+def partial_6_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_h_II_(bar_mu_S_):
+        args = (f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args[3] = bar_mu_S_
+        return func_h_II(*args)
+    h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_h_II_, bar_mu_S, h_II*1e-8)
+
+def partial_7_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_h_II_(bar_phi_S_):
+        args = (f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args[4] = bar_phi_S_
+        return func_h_II(*args)
+    h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_h_II_, bar_phi_S, h_II*1e-8)
+
+def partial_8_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_h_II_(bar_mu_L_):
+        args = (f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args[5] = bar_mu_L_
+        return func_h_II(*args)
+    h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_h_II_, bar_mu_L, h_II*1e-8)
+
+def partial_9_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_h_II_(bar_phi_L_):
+        args = (f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args[6] = bar_phi_L_
+        return func_h_II(*args)
+    h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return derivative(func_h_II_, bar_phi_L, h_II*1e-8)
