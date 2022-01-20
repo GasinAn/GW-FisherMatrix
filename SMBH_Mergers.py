@@ -225,14 +225,14 @@ def partial_9_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_I_, bar_phi_L, h_I*1e-8)
 
-def partial_0_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_0_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     M = cal_M**(5/2)/mu**(3/2)
     eta = mu/M
     x = (pi*M*(1+z)*f)**(2/3)
-    h_I = func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return (-5/4)*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-2/3)*(
         1+((55/6)*eta)*x+(8*pi-2*beta)*x**(3/2)
-    )*h_I
+    )*h_II
 
 def partial_1_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     M = cal_M**(5/2)/mu**(3/2)
