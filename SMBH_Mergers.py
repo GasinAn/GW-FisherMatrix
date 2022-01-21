@@ -160,3 +160,12 @@ def signal2noise_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
         return (abs(h_I)**2)/S_n(f)
     square_rho = 4*quad(func_integrated, 0, f_max(M_1, M_2))[0]
     return sqrt(square_rho)
+
+def signal2noise(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_integrated(f):
+        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        h_I = func_h_I(*args)
+        h_II = func_h_II(*args)
+        return (abs(h_I)**2+abs(h_II)**2)/S_n(f)
+    square_rho = 4*quad(func_integrated, 0, f_max(M_1, M_2))[0]
+    return sqrt(square_rho)
