@@ -11,7 +11,7 @@ z = 1
 beta = 0
 phi_c = 0
 t_c = 0
-ln_D_L = z/(75*1e3/(1e6*R/(pi/180/60/60)))
+ln_D_L = log(z/(75*1e3/(1e6*R/(pi/180/60/60))))
 
 def func_Lambda_alpha(Lambda_p, Lambda_t, F_p_alpha, F_t_alpha):
     return sqrt((Lambda_p*F_p_alpha)**2+(Lambda_t*F_t_alpha)**2)
@@ -347,3 +347,11 @@ def Fisher_matrix(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
             f_max = (3**(3/2)*pi*M*(1+z))**(-1)
             Gamma[i,j] = 4*quad(func_integrated, 0, f_max)[0]
     return Gamma
+
+print(signal2noise(1e7, 1e7, 0.3, 5.0, 0.8, 2.0))
+print(signal2noise(1e7, 1e6, 0.3, 5.0, 0.8, 2.0))
+print(signal2noise(1e6, 1e6, 0.3, 5.0, 0.8, 2.0))
+print(signal2noise(1e6, 1e5, 0.3, 5.0, 0.8, 2.0))
+print(signal2noise(1e5, 1e5, 0.3, 5.0, 0.8, 2.0))
+print(signal2noise(1e5, 1e4, 0.3, 5.0, 0.8, 2.0))
+print(signal2noise(1e4, 1e4, 0.3, 5.0, 0.8, 2.0))
