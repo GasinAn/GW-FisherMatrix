@@ -154,13 +154,9 @@ def func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     return A*exp(1j*(Psi-varphi_p_I-varphi_D))
 
 def signal2noise_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    M_1, M_2 = M_1*(M_sun*G/c**3), M_2*(M_sun*G/c**3)
-    cal_M, mu = (M_1*M_2)**(3/5)/(M_1+M_2)**(1/5), (M_1*M_2)/(M_1+M_2)
     def func_integrated(f):
-        args = (cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-        args = (f,)+args
+        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
         h_I = func_h_I(*args)
         return (abs(h_I)**2)/S_n(f)
-    M = cal_M**(5/2)/mu**(3/2)
-    f_max = (3**(3/2)*pi*M*(1+z))**(-1)
-    return 4*quad(func_integrated, 0, f_max)[0]
+    square_rho = 4*quad(func_integrated, 0, f_max(M_1, M_2))[0]
+    return sqrt(square_rho)
