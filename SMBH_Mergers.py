@@ -143,7 +143,7 @@ def func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     varphi_p_I = func_varphi_p_alpha(Lambda_p, Lambda_t, F_p_I, F_t_I)
     varphi_D = func_varphi_D(f, bar_theta_S, bar_phi, bar_phi_S)
     A = (sqrt(3)/2)*Lambda_I*cal_A*f**(-7/6)
-    return A*exp(1j*(Psi-varphi_p_I*varphi_D))
+    return A*exp(1j*(Psi-varphi_p_I-varphi_D))
 
 def signal2noise_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     M_1, M_2 = M_1*(M_sun*G/c**3), M_2*(M_sun*G/c**3)
