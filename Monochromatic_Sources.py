@@ -83,6 +83,7 @@ def func_bar_phi(t):
     return bar_phi_0+2*pi*t/T
 
 def S_n(f):
+    f = abs(f)
     alpha = 10**(-22.79)*(f/1e-3)**(-7/3)
     beta  = 10**(-24.54)*(f/1e-3)
     gamma = 10**(-23.04)
