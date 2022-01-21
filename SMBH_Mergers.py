@@ -115,9 +115,16 @@ def S_n(f):
         S_n_co = 10**(-46.850)*f**(-2.6)
     return S_n_in+S_n_co
 
-def preparation(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    bar_theta_S = arccos(bar_mu_S)
-    bar_theta_L = arccos(bar_mu_L)
+def f_max(M_1, M_2):
+    M_1, M_2 = M_1*(M_sun*G/c**3), M_2*(M_sun*G/c**3)
+    M = M_1+M_2
+    return (3**(3/2)*pi*M*(1+z))**(-1)
+
+def preparation(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M_1, M_2 = M_1*(M_sun*G/c**3), M_2*(M_sun*G/c**3)
+    M = M_1+M_2
+    cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
+    bar_theta_S, bar_theta_L = arccos(bar_mu_S), arccos(bar_mu_L)
     t = func_t(f, cal_M, mu)
     bar_phi = func_bar_phi(t)
     theta_S = func_theta_S(bar_theta_S, bar_phi, bar_phi_S)
@@ -129,12 +136,13 @@ def preparation(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     psi_S = func_psi_S(Lz, Ln, zn, nLz)
     Lambda_p = func_Lambda_p(Ln)
     Lambda_t = func_Lambda_t(Ln)
-    return (t, Lambda_p, Lambda_t, theta_S, phi_S, psi_S)
+    return (t, cal_M, mu, Lambda_p, Lambda_t, theta_S, phi_S, psi_S)
 
-def func_h_I(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    args = preparation(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-    t, Lambda_p, Lambda_t, theta_S, phi_S, psi_S = args
-    bar_theta_S, bar_phi = arccos(bar_mu_S), func_bar_phi(t)
+def func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    args = preparation(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    t, cal_M, mu, Lambda_p, Lambda_t, theta_S, phi_S, psi_S = args
+    bar_theta_S = arccos(bar_mu_S)
+    bar_phi = func_bar_phi(t)
     F_p_I = func_F_p_I(theta_S, phi_S, psi_S)
     F_t_I = func_F_t_I(theta_S, phi_S, psi_S)
     Lambda_I = func_Lambda_alpha(Lambda_p, Lambda_t, F_p_I, F_t_I)
