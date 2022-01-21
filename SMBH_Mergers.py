@@ -292,8 +292,9 @@ def partial_9_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     h_II = func_h_II(f, cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_II_, bar_phi_L, h_II*1e-8)
 
-def signal2noise_I(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    cal_M, mu = cal_M*(M_sun*G/c**3), mu*(M_sun*G/c**3)
+def signal2noise_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M_1, M_2 = M_1*(M_sun*G/c**3), M_2*(M_sun*G/c**3)
+    cal_M, mu = (M_1*M_2)**(3/5)/(M_1+M_2)**(1/5), (M_1*M_2)/(M_1+M_2)
     def func_integrated(f):
         args = (cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
         args = (f,)+args
@@ -303,8 +304,9 @@ def signal2noise_I(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     f_max = (3**(3/2)*pi*M*(1+z))**(-1)
     return 4*quad(func_integrated, 0, f_max)[0]
 
-def signal2noise(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    cal_M, mu = cal_M*(M_sun*G/c**3), mu*(M_sun*G/c**3)
+def signal2noise(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M_1, M_2 = M_1*(M_sun*G/c**3), M_2*(M_sun*G/c**3)
+    cal_M, mu = (M_1*M_2)**(3/5)/(M_1+M_2)**(1/5), (M_1*M_2)/(M_1+M_2)
     def func_integrated(f):
         args = (cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
         args = (f,)+args
@@ -315,7 +317,9 @@ def signal2noise(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     f_max = (3**(3/2)*pi*M*(1+z))**(-1)
     return 4*quad(func_integrated, 0, f_max)[0]
 
-def Fisher_matrix_I(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def Fisher_matrix_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M_1, M_2 = M_1*(M_sun*G/c**3), M_2*(M_sun*G/c**3)
+    cal_M, mu = (M_1*M_2)**(3/5)/(M_1+M_2)**(1/5), (M_1*M_2)/(M_1+M_2)
     Gamma = empty((10,10))
     for i in range(10):
         for j in range(10):
@@ -330,7 +334,9 @@ def Fisher_matrix_I(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
             Gamma[i,j] = 4*quad(func_integrated, 0, f_max)[0]
     return Gamma
 
-def Fisher_matrix(cal_M, mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def Fisher_matrix(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    M_1, M_2 = M_1*(M_sun*G/c**3), M_2*(M_sun*G/c**3)
+    cal_M, mu = (M_1*M_2)**(3/5)/(M_1+M_2)**(1/5), (M_1*M_2)/(M_1+M_2)
     Gamma = empty((10,10))
     for i in range(10):
         for j in range(10):
