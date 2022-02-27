@@ -2,16 +2,18 @@ from numpy import *
 from scipy.integrate import *
 from scipy.misc import derivative
 
-M_sun = 1.988409870698051e+30
+
 G = 6.6743e-11
 c = 299792458
-R = 149597870700
-T = sqrt(R**3/((G*M_sun)/(4*pi**2)))
 z = 1
 beta = 0
 phi_c = 0
 t_c = 0
-ln_D_L = log(z/(75*1e3/(1e6*R/(pi/180/60/60)))*c)
+M_sun = 1.988409870698051e+30*(G/c**3)
+R = 149597870700/c
+T = sqrt(R**3/(M_sun/(4*pi**2)))
+ln_D_L = log(z/(75*1e3/(1e6*(R*c)/(pi/180/60/60))))
+
 
 def func_Lambda_alpha(Lambda_p, Lambda_t, F_p_alpha, F_t_alpha):
     return sqrt((Lambda_p*F_p_alpha)**2+(Lambda_t*F_t_alpha)**2)
@@ -39,7 +41,7 @@ def func_varphi_p_alpha(Lambda_p, Lambda_t, F_p_alpha, F_t_alpha):
     return arctan(-(Lambda_t*F_t_alpha)/(Lambda_p*F_p_alpha))
 
 def func_varphi_D(f, bar_theta_S, bar_phi, bar_phi_S):
-    return 2*pi*f/c*R*sin(bar_theta_S)*cos(bar_phi-bar_phi_S)
+    return 2*pi*f*R*sin(bar_theta_S)*cos(bar_phi-bar_phi_S)
 
 def func_Lz(bar_theta_L, bar_phi, bar_phi_L):
     return ((sqrt(1)/2)*cos(bar_theta_L)
@@ -116,12 +118,12 @@ def S_n(f):
     return S_n_in+S_n_co
 
 def f_max(M_1, M_2):
-    M_1, M_2 = M_1*(M_sun*G/c**3), M_2*(M_sun*G/c**3)
+    M_1, M_2 = M_1*M_sun, M_2*M_sun
     M = M_1+M_2
     return (3**(3/2)*pi*M*(1+z))**(-1)
 
 def preparation(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    M_1, M_2 = M_1*(M_sun*G/c**3), M_2*(M_sun*G/c**3)
+    M_1, M_2 = M_1*M_sun, M_2*M_sun
     M = M_1+M_2
     cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
     bar_theta_S, bar_theta_L = arccos(bar_mu_S), arccos(bar_mu_L)
