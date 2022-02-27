@@ -155,6 +155,21 @@ def func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     A = (sqrt(3)/2)*Lambda_I*cal_A*f**(-7/6)
     return A*exp(1j*(Psi-varphi_p_I-varphi_D))
 
+def func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    args = preparation(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    t, cal_M, mu, Lambda_p, Lambda_t, theta_S, phi_S, psi_S = args
+    bar_theta_S = arccos(bar_mu_S)
+    bar_phi = func_bar_phi(t)
+    F_p_II = func_F_p_II(theta_S, phi_S, psi_S)
+    F_t_II = func_F_t_II(theta_S, phi_S, psi_S)
+    Lambda_II = func_Lambda_alpha(Lambda_p, Lambda_t, F_p_II, F_t_II)
+    cal_A = func_cal_A(cal_M)
+    Psi = func_Psi(f, cal_M, mu)
+    varphi_p_II = func_varphi_p_alpha(Lambda_p, Lambda_t, F_p_II, F_t_II)
+    varphi_D = func_varphi_D(f, bar_theta_S, bar_phi, bar_phi_S)
+    A = (sqrt(3)/2)*Lambda_II*cal_A*f**(-7/6)
+    return A*exp(1j*(Psi-varphi_p_II-varphi_D))
+
 def signal2noise_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_integrated(f):
         args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
@@ -162,3 +177,15 @@ def signal2noise_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
         return (abs(h_I)**2)/S_n(f)
     square_rho = 4*quad(func_integrated, 0, f_max(M_1, M_2))[0]
     return sqrt(square_rho)
+
+def signal2noise(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    def func_integrated(f):
+        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        h_I = func_h_I(*args)
+        h_II = func_h_II(*args)
+        return (abs(h_I)**2+abs(h_II)**2)/S_n(f)
+    square_rho = 4*quad(func_integrated, 0, f_max(M_1, M_2))[0]
+    return sqrt(square_rho)
+
+print(signal2noise_I(1e6,1e5,0.3,5.0,0.8,2.0))
+print(signal2noise(1e6,1e5,0.3,5.0,0.8,2.0))
