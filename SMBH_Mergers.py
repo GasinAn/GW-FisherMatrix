@@ -213,33 +213,33 @@ def partial_5_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
 
 def partial_6_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_h_I_(bar_mu_S_):
-        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = [f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L]
         args[3] = bar_mu_S_
-        return func_h_I(*args)
+        return func_h_I(*tuple(args))
     h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_I_, bar_mu_S, h_I*1e-8)
 
 def partial_7_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_h_I_(bar_phi_S_):
-        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = [f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L]
         args[4] = bar_phi_S_
-        return func_h_I(*args)
+        return func_h_I(*tuple(args))
     h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_I_, bar_phi_S, h_I*1e-8)
 
 def partial_8_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_h_I_(bar_mu_L_):
-        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = [f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L]
         args[5] = bar_mu_L_
-        return func_h_I(*args)
+        return func_h_I(*tuple(args))
     h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_I_, bar_mu_L, h_I*1e-8)
 
 def partial_9_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_h_I_(bar_phi_L_):
-        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = [f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L]
         args[6] = bar_phi_L_
-        return func_h_I(*args)
+        return func_h_I(*tuple(args))
     h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_I_, bar_phi_L, h_I*1e-8)
 
@@ -286,33 +286,33 @@ def partial_5_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
 
 def partial_6_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_h_II_(bar_mu_S_):
-        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = [f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L]
         args[3] = bar_mu_S_
-        return func_h_II(*args)
+        return func_h_II(*tuple(args))
     h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_II_, bar_mu_S, h_II*1e-8)
 
 def partial_7_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_h_II_(bar_phi_S_):
-        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = [f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L]
         args[4] = bar_phi_S_
-        return func_h_II(*args)
+        return func_h_II(*tuple(args))
     h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_II_, bar_phi_S, h_II*1e-8)
 
 def partial_8_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_h_II_(bar_mu_L_):
-        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = [f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L]
         args[5] = bar_mu_L_
-        return func_h_II(*args)
+        return func_h_II(*tuple(args))
     h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_II_, bar_mu_L, h_II*1e-8)
 
 def partial_9_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_h_II_(bar_phi_L_):
-        args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = [f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L]
         args[6] = bar_phi_L_
-        return func_h_II(*args)
+        return func_h_II(*tuple(args))
     h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return derivative(func_h_II_, bar_phi_L, h_II*1e-8)
 
