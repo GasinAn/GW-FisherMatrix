@@ -94,7 +94,7 @@ def func_phi_S(t, bar_theta_S, bar_phi, bar_phi_S):
     alpha_0 = 0
     return alpha_0+2*pi*t/T+arctan(
         (sin(bar_theta_S)*cos(bar_phi-bar_phi_S)+sqrt(3)*cos(bar_theta_S))
-        /(2*sin(bar_theta_S)*cos(bar_phi-bar_phi_S)))
+        /(2*sin(bar_theta_S)*sin(bar_phi-bar_phi_S)))
 
 def func_psi_S(Lz, Ln, zn, nLz):
     return arctan((Lz-Ln*zn)/nLz)
