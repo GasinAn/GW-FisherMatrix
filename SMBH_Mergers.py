@@ -19,7 +19,7 @@ def func_Lambda_alpha(Lambda_p, Lambda_t, F_p_alpha, F_t_alpha):
     return sqrt((Lambda_p*F_p_alpha)**2+(Lambda_t*F_t_alpha)**2)
 
 def func_cal_A(cal_M):
-    return (5/96)**(1/2)*pi*(-2/3)*(cal_M*(1+z))**(5/6)*(exp(ln_D_L))**(-1)
+    return (5/96)**(1/2)*pi**(-2/3)*(cal_M*(1+z))**(5/6)*(exp(ln_D_L))**(-1)
 
 def func_Psi(f, cal_M, mu):
     M = cal_M**(5/2)/mu**(3/2)
