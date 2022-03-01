@@ -177,7 +177,7 @@ def partial_0_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
     eta = mu/M
     x = (pi*M*(1+z)*f)**(2/3)
-    return (-5/4)*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-2/3)*(
+    return (-5/4)*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(
         1+((55/6)*eta)*x+(8*pi-2*beta)*x**(3/2)
     )*h_I
 
@@ -188,7 +188,7 @@ def partial_1_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
     eta = mu/M
     x = (pi*M*(1+z)*f)**(2/3)
-    return (3/4)*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-5/3)*mu*(
+    return (3/4)*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(
         ((-3715/756)+(55/6)*eta)*x+(24*pi-6*beta)*x**(3/2)
     )*h_I
 
@@ -197,7 +197,7 @@ def partial_2_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     M_1, M_2 = M_1*M_sun, M_2*M_sun
     M = M_1+M_2
     cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
-    return 3*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-5/3)*(pi*M*(1+z)*f)*h_I
+    return 3*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(pi*M*(1+z)*f)*h_I
 
 def partial_3_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
@@ -250,7 +250,7 @@ def partial_0_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
     eta = mu/M
     x = (pi*M*(1+z)*f)**(2/3)
-    return (-5/4)*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-2/3)*(
+    return (-5/4)*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(
         1+((55/6)*eta)*x+(8*pi-2*beta)*x**(3/2)
     )*h_II
 
@@ -261,7 +261,7 @@ def partial_1_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
     eta = mu/M
     x = (pi*M*(1+z)*f)**(2/3)
-    return (3/4)*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-5/3)*mu*(
+    return (3/4)*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(
         ((-3715/756)+(55/6)*eta)*x+(24*pi-6*beta)*x**(3/2)
     )*h_II
 
@@ -270,7 +270,7 @@ def partial_2_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     M_1, M_2 = M_1*M_sun, M_2*M_sun
     M = M_1+M_2
     cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
-    return 3*1j*(8*pi*(1+z)*f)**(-5/3)*(cal_M)**(-5/3)*(pi*M*(1+z)*f)*h_II
+    return 3*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(pi*M*(1+z)*f)*h_II
 
 def partial_3_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
