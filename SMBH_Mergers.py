@@ -352,6 +352,7 @@ def Fisher_matrix(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
             Gamma[i,j] = 4*quad(func_integrated, 0, f_max(M_1, M_2))[0]
     return Gamma
 
+
 print(signal2noise_I(1e7,1e7,0.3,5.0,0.8,2.0))
 print(signal2noise(1e7,1e7,0.3,5.0,0.8,2.0))
 print(signal2noise_I(1e6,1e6,-0.8,1.0,0.5,3.0))
