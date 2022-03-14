@@ -122,10 +122,14 @@ def f_max(M_1, M_2):
     M = M_1+M_2
     return (3**(3/2)*pi*M*(1+z))**(-1)
 
-def preparation(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def input2param(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     M_1, M_2 = M_1*M_sun, M_2*M_sun
     M = M_1+M_2
     cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
+    return f, log(cal_M), log(mu), bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L
+
+def func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    cal_M, mu = exp(ln_cal_M), exp(ln_mu)
     bar_theta_S, bar_theta_L = arccos(bar_mu_S), arccos(bar_mu_L)
     t = func_t(f, cal_M, mu)
     bar_phi = func_bar_phi(t)
@@ -138,13 +142,6 @@ def preparation(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     psi_S = func_psi_S(Lz, Ln, zn, nLz)
     Lambda_p = func_Lambda_p(Ln)
     Lambda_t = func_Lambda_t(Ln)
-    return (t, cal_M, mu, Lambda_p, Lambda_t, theta_S, phi_S, psi_S)
-
-def func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    args = preparation(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-    t, cal_M, mu, Lambda_p, Lambda_t, theta_S, phi_S, psi_S = args
-    bar_theta_S = arccos(bar_mu_S)
-    bar_phi = func_bar_phi(t)
     F_p_I = func_F_p_I(theta_S, phi_S, psi_S)
     F_t_I = func_F_t_I(theta_S, phi_S, psi_S)
     Lambda_I = func_Lambda_alpha(Lambda_p, Lambda_t, F_p_I, F_t_I)
@@ -155,11 +152,20 @@ def func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     A = (sqrt(3)/2)*Lambda_I*cal_A*f**(-7/6)
     return A*exp(1j*(Psi-varphi_p_I-varphi_D))
 
-def func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    args = preparation(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-    t, cal_M, mu, Lambda_p, Lambda_t, theta_S, phi_S, psi_S = args
-    bar_theta_S = arccos(bar_mu_S)
+def func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    cal_M, mu = exp(ln_cal_M), exp(ln_mu)
+    bar_theta_S, bar_theta_L = arccos(bar_mu_S), arccos(bar_mu_L)
+    t = func_t(f, cal_M, mu)
     bar_phi = func_bar_phi(t)
+    theta_S = func_theta_S(bar_theta_S, bar_phi, bar_phi_S)
+    Lz = func_Lz(bar_theta_L, bar_phi, bar_phi_L)
+    Ln = func_Ln(bar_theta_L, bar_theta_S, bar_phi_L, bar_phi_S)
+    zn = func_zn(theta_S)
+    nLz = func_nLz(bar_theta_L, bar_theta_S, bar_phi_L, bar_phi_S, bar_phi)
+    phi_S = func_phi_S(t, bar_theta_S, bar_phi, bar_phi_S)
+    psi_S = func_psi_S(Lz, Ln, zn, nLz)
+    Lambda_p = func_Lambda_p(Ln)
+    Lambda_t = func_Lambda_t(Ln)
     F_p_II = func_F_p_II(theta_S, phi_S, psi_S)
     F_t_II = func_F_t_II(theta_S, phi_S, psi_S)
     Lambda_II = func_Lambda_alpha(Lambda_p, Lambda_t, F_p_II, F_t_II)
@@ -170,147 +176,130 @@ def func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     A = (sqrt(3)/2)*Lambda_II*cal_A*f**(-7/6)
     return A*exp(1j*(Psi-varphi_p_II-varphi_D))
 
-def partial_0_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-    M_1, M_2 = M_1*M_sun, M_2*M_sun
-    M = M_1+M_2
-    cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
-    eta = mu/M
-    x = (pi*M*(1+z)*f)**(2/3)
-    return (-5/4)*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(
-        1+((55/6)*eta)*x+(8*pi-2*beta)*x**(3/2)
-    )*h_I
+def partial_0_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    ln_cal_M_p = ln_cal_M+ln_cal_M*1e-12
+    ln_cal_M_n = ln_cal_M-ln_cal_M*1e-12
+    h_I_p = func_h_I(f, ln_cal_M_p, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    h_I_n = func_h_I(f, ln_cal_M_n, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return (h_I_p-h_I_n)/(ln_cal_M*2e-12)
 
-def partial_1_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-    M_1, M_2 = M_1*M_sun, M_2*M_sun
-    M = M_1+M_2
-    cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
-    eta = mu/M
-    x = (pi*M*(1+z)*f)**(2/3)
-    return (3/4)*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(
-        ((-3715/756)+(55/6)*eta)*x+(24*pi-6*beta)*x**(3/2)
-    )*h_I
+def partial_1_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    ln_mu_p = ln_mu+ln_mu*1e-12
+    ln_mu_n = ln_mu-ln_mu*1e-12
+    h_I_p = func_h_I(f, ln_cal_M, ln_mu_p, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    h_I_n = func_h_I(f, ln_cal_M, ln_mu_n, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return (h_I_p-h_I_n)/(ln_mu*2e-12)
 
-def partial_2_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-    M_1, M_2 = M_1*M_sun, M_2*M_sun
-    M = M_1+M_2
-    cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
+def partial_2_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_I = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    cal_M, mu = exp(ln_cal_M), exp(ln_mu)
+    M = cal_M**(5/2)/mu**(3/2)
     return 3*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(pi*M*(1+z)*f)*h_I
 
-def partial_3_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+def partial_3_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_I = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return -1j*h_I
 
-def partial_4_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+def partial_4_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_I = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return 2*pi*1j*f*h_I
 
-def partial_5_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_I = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+def partial_5_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_I = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return -h_I
 
-def partial_6_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_6_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     bar_mu_S_p = bar_mu_S+1e-12
     bar_mu_S_n = bar_mu_S-1e-12
-    h_I_p = func_h_I(f, M_1, M_2, bar_mu_S_p, bar_phi_S, bar_mu_L, bar_phi_L)
-    h_I_n = func_h_I(f, M_1, M_2, bar_mu_S_n, bar_phi_S, bar_mu_L, bar_phi_L)
+    h_I_p = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S_p, bar_phi_S, bar_mu_L, bar_phi_L)
+    h_I_n = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S_n, bar_phi_S, bar_mu_L, bar_phi_L)
     return (h_I_p-h_I_n)/2e-12
 
-def partial_7_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_7_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     bar_phi_S_p = bar_phi_S+1e-12
     bar_phi_S_n = bar_phi_S-1e-12
-    h_I_p = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S_p, bar_mu_L, bar_phi_L)
-    h_I_n = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S_n, bar_mu_L, bar_phi_L)
+    h_I_p = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S_p, bar_mu_L, bar_phi_L)
+    h_I_n = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S_n, bar_mu_L, bar_phi_L)
     return (h_I_p-h_I_n)/2e-12
 
-def partial_8_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_8_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     bar_mu_L_p = bar_mu_L+1e-12
     bar_mu_L_n = bar_mu_L-1e-12
-    h_I_p = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L_p, bar_phi_L)
-    h_I_n = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L_n, bar_phi_L)
+    h_I_p = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L_p, bar_phi_L)
+    h_I_n = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L_n, bar_phi_L)
     return (h_I_p-h_I_n)/2e-12
 
-def partial_9_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_9_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     bar_phi_L_p = bar_phi_L+1e-12
     bar_phi_L_n = bar_phi_L-1e-12
-    h_I_p = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_p)
-    h_I_n = func_h_I(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_n)
+    h_I_p = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_p)
+    h_I_n = func_h_I(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_n)
     return (h_I_p-h_I_n)/2e-12
 
-def partial_0_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-    M_1, M_2 = M_1*M_sun, M_2*M_sun
-    M = M_1+M_2
-    cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
-    eta = mu/M
-    x = (pi*M*(1+z)*f)**(2/3)
-    return (-5/4)*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(
-        1+((55/6)*eta)*x+(8*pi-2*beta)*x**(3/2)
-    )*h_II
+def partial_0_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    ln_cal_M_p = ln_cal_M+ln_cal_M*1e-12
+    ln_cal_M_n = ln_cal_M-ln_cal_M*1e-12
+    h_II_p = func_h_II(f, ln_cal_M_p, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    h_II_n = func_h_II(f, ln_cal_M_n, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return (h_II_p-h_II_n)/(ln_cal_M*2e-12)
 
-def partial_1_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-    M_1, M_2 = M_1*M_sun, M_2*M_sun
-    M = M_1+M_2
-    cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
-    eta = mu/M
-    x = (pi*M*(1+z)*f)**(2/3)
-    return (3/4)*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(
-        ((-3715/756)+(55/6)*eta)*x+(24*pi-6*beta)*x**(3/2)
-    )*h_II
+def partial_1_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    ln_mu_p = ln_mu+ln_mu*1e-12
+    ln_mu_n = ln_mu-ln_mu*1e-12
+    h_II_p = func_h_II(f, ln_cal_M, ln_mu_p, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    h_II_n = func_h_II(f, ln_cal_M, ln_mu_n, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    return (h_II_p-h_II_n)/(ln_mu*2e-12)
 
-def partial_2_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-    M_1, M_2 = M_1*M_sun, M_2*M_sun
-    M = M_1+M_2
-    cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
+def partial_2_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_II = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+    cal_M, mu = exp(ln_cal_M), exp(ln_mu)
+    M = cal_M**(5/2)/mu**(3/2)
     return 3*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(pi*M*(1+z)*f)*h_II
 
-def partial_3_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+def partial_3_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_II = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return -1j*h_II
 
-def partial_4_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+def partial_4_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_II = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return 2*pi*1j*f*h_II
 
-def partial_5_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
-    h_II = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+def partial_5_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    h_II = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
     return -h_II
 
-def partial_6_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_6_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     bar_mu_S_p = bar_mu_S+1e-12
     bar_mu_S_n = bar_mu_S-1e-12
-    h_II_p = func_h_II(f, M_1, M_2, bar_mu_S_p, bar_phi_S, bar_mu_L, bar_phi_L)
-    h_II_n = func_h_II(f, M_1, M_2, bar_mu_S_n, bar_phi_S, bar_mu_L, bar_phi_L)
+    h_II_p = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S_p, bar_phi_S, bar_mu_L, bar_phi_L)
+    h_II_n = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S_n, bar_phi_S, bar_mu_L, bar_phi_L)
     return (h_II_p-h_II_n)/2e-12
 
-def partial_7_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_7_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     bar_phi_S_p = bar_phi_S+1e-12
     bar_phi_S_n = bar_phi_S-1e-12
-    h_II_p = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S_p, bar_mu_L, bar_phi_L)
-    h_II_n = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S_n, bar_mu_L, bar_phi_L)
+    h_II_p = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S_p, bar_mu_L, bar_phi_L)
+    h_II_n = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S_n, bar_mu_L, bar_phi_L)
     return (h_II_p-h_II_n)/2e-12
 
-def partial_8_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_8_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     bar_mu_L_p = bar_mu_L+1e-12
     bar_mu_L_n = bar_mu_L-1e-12
-    h_II_p = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L_p, bar_phi_L)
-    h_II_n = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L_n, bar_phi_L)
+    h_II_p = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L_p, bar_phi_L)
+    h_II_n = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L_n, bar_phi_L)
     return (h_II_p-h_II_n)/2e-12
 
-def partial_9_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+def partial_9_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     bar_phi_L_p = bar_phi_L+1e-12
     bar_phi_L_n = bar_phi_L-1e-12
-    h_II_p = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_p)
-    h_II_n = func_h_II(f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_n)
+    h_II_p = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_p)
+    h_II_n = func_h_II(f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L_n)
     return (h_II_p-h_II_n)/2e-12
 
 def signal2noise_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_integrated(f):
         args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = input2param(*args)
         h_I = func_h_I(*args)
         return (abs(h_I)**2)/S_n(f)
     square_rho = 4*quad(func_integrated, 0, f_max(M_1, M_2))[0]
@@ -319,6 +308,7 @@ def signal2noise_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
 def signal2noise(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     def func_integrated(f):
         args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+        args = input2param(*args)
         h_I = func_h_I(*args)
         h_II = func_h_II(*args)
         return (abs(h_I)**2+abs(h_II)**2)/S_n(f)
@@ -331,6 +321,7 @@ def Fisher_matrix_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
         for j in range(10):
             def func_integrated(f):
                 args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+                args = input2param(*args)
                 h_I_i = eval(f'partial_{i}_h_I(*args)')
                 h_I_j = eval(f'partial_{j}_h_I(*args)')
                 return (h_I_i.real*h_I_j.real+h_I_i.imag*h_I_j.imag)/S_n(f)
@@ -343,6 +334,7 @@ def Fisher_matrix(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
         for j in range(10):
             def func_integrated(f):
                 args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
+                args = input2param(*args)
                 h_I_i = eval(f'partial_{i}_h_I(*args)')
                 h_I_j = eval(f'partial_{j}_h_I(*args)')
                 h_II_i = eval(f'partial_{i}_h_II(*args)')
@@ -366,23 +358,23 @@ print('1e7')
 Gamma=Fisher_matrix(1e7,1e7,0.3,5.0,0.8,2.0)
 print(Gamma)
 print(linalg.inv(Gamma))
-savetxt('1e7.txt',Gamma)
-savetxt('1e7_Sigma.txt',linalg.inv(Gamma))
+savetxt('1e7_n.txt',Gamma)
+savetxt('1e7_n_Sigma.txt',linalg.inv(Gamma))
 print('1e6')
 Gamma=Fisher_matrix(1e6,1e6,-0.8,1.0,0.5,3.0)
 print(Gamma)
 print(linalg.inv(Gamma))
-savetxt('1e6.txt',Gamma)
-savetxt('1e6_Sigma.txt',linalg.inv(Gamma))
+savetxt('1e6_n.txt',Gamma)
+savetxt('1e6_n_Sigma.txt',linalg.inv(Gamma))
 print('1e5')
 Gamma=Fisher_matrix(1e5,1e5,0.9,2.0,-0.8,5.0)
 print(Gamma)
 print(linalg.inv(Gamma))
-savetxt('1e5.txt',Gamma)
-savetxt('1e5_Sigma.txt',linalg.inv(Gamma))
+savetxt('1e5_n.txt',Gamma)
+savetxt('1e5_n_Sigma.txt',linalg.inv(Gamma))
 print('1e4')
 Gamma=Fisher_matrix(1e4,1e4,-0.1,3.0,-0.9,6.0)
 print(Gamma)
 print(linalg.inv(Gamma))
-savetxt('1e4.txt',Gamma)
-savetxt('1e4_Sigma.txt',linalg.inv(Gamma))
+savetxt('1e4_n.txt',Gamma)
+savetxt('1e4_n_Sigma.txt',linalg.inv(Gamma))
