@@ -77,13 +77,13 @@ def h(Alpha, f, ln_cal_M, ln_mu, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     return A*exp(1j*(Psi-varphi_p-varphi_D))
 
 def h_0(*args):
-    ln_cal_M_p, ln_cal_M_n = args[2]*(1+1e-5), args[2]*(1-1e-5)
+    ln_cal_M_p, ln_cal_M_n = args[2]+args[2]*1e-5, args[2]-args[2]*1e-5
     h_p = h(*(args[:2]+(ln_cal_M_p,)+args[3:]))
     h_n = h(*(args[:2]+(ln_cal_M_n,)+args[3:]))
     return (h_p-h_n)/(args[2]*2e-5)
 
 def h_1(*args):
-    ln_mu_p, ln_mu_n = args[3]*(1+1e-5), args[3]*(1-1e-5)
+    ln_mu_p, ln_mu_n = args[3]+args[3]*1e-5, args[3]-args[3]*1e-5
     h_p = h(*(args[:3]+(ln_mu_p,)+args[4:]))
     h_n = h(*(args[:3]+(ln_mu_n,)+args[4:]))
     return (h_p-h_n)/(args[3]*2e-5)
