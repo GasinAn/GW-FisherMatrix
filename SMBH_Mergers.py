@@ -71,8 +71,8 @@ def h(Alpha, f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
 
     return A*exp(1j*(Psi-varphi_p-varphi_D))
 
-def h_0(*args):
-    f, M_1, M_2 = args[1:4]
+def h_0(**kwargs):
+    f, M_1, M_2 = kwargs['f'], kwargs['M_1'], kwargs['M_2']
 
     M_1, M_2 = M_1*M_sun, M_2*M_sun
     M = M_1+M_2
@@ -82,10 +82,10 @@ def h_0(*args):
     x = (pi*M*(1+z)*f)**(2/3)
     return (-5/4)*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(
         1+((55/6)*eta)*x+(8*pi-2*beta)*x**(3/2)
-    )*h(*args)
+    )*h(**kwargs)
 
-def h_1(*args):
-    f, M_1, M_2 = args[1:4]
+def h_1(**kwargs):
+    f, M_1, M_2 = kwargs['f'], kwargs['M_1'], kwargs['M_2']
 
     M_1, M_2 = M_1*M_sun, M_2*M_sun
     M = M_1+M_2
@@ -95,50 +95,54 @@ def h_1(*args):
     x = (pi*M*(1+z)*f)**(2/3)
     return (3/4)*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(
         ((-3715/756)+(55/6)*eta)*x+(24*pi-6*beta)*x**(3/2)
-    )*h(*args)
+    )*h(**kwargs)
 
-def h_2(*args):
-    f, M_1, M_2 = args[1:4]
+def h_2(**kwargs):
+    f, M_1, M_2 = kwargs['f'], kwargs['M_1'], kwargs['M_2']
 
     M_1, M_2 = M_1*M_sun, M_2*M_sun
     M = M_1+M_2
     cal_M, mu = (M_1*M_2)**(3/5)/M**(1/5), (M_1*M_2)/M
 
-    return 3*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)*(pi*M*(1+z)*f)*h(*args)
+    return (3*1j*(8*pi*f)**(-5/3)*(cal_M*(1+z))**(-5/3)
+           *(pi*M*(1+z)*f)*h(**kwargs))
 
-def h_3(*args):
-    return -1j*h(*args)
+def h_3(**kwargs):
+    return -1j*h(**kwargs)
 
-def h_4(*args):
-    f = args[1]
-    return 2*pi*1j*f*h(*args)
+def h_4(**kwargs):
+    return 2*pi*1j*kwargs['f']*h(**kwargs)
 
-def h_5(*args):
-    return -h(*args)
+def h_5(**kwargs):
+    return -h(**kwargs)
 
-def h_6(*args):
-    bar_mu_S_p, bar_mu_S_n = args[4]+1e-5, args[4]-1e-5
-    h_p = h(*(args[:4]+(bar_mu_S_p,)+args[5:]))
-    h_n = h(*(args[:4]+(bar_mu_S_n,)+args[5:]))
-    return (h_p-h_n)/2e-5
+def h_6(**kwargs):
+    bar_mu_S_p = kwargs['bar_mu_S']+1e-5
+    bar_mu_S_n = kwargs['bar_mu_S']-1e-5
+    kwargs_p, kwargs_n = kwargs.copy(), kwargs.copy()
+    kwargs_p['bar_mu_S'], kwargs_n['bar_mu_S'] = bar_mu_S_p, bar_mu_S_n
+    return (h(**kwargs_p)-h(**kwargs_n))/2e-5
 
-def h_7(*args):
-    bar_phi_S_p, bar_phi_S_n = args[5]+1e-5, args[5]-1e-5
-    h_p = h(*(args[:5]+(bar_phi_S_p,)+args[6:]))
-    h_n = h(*(args[:5]+(bar_phi_S_n,)+args[6:]))
-    return (h_p-h_n)/2e-5
+def h_7(**kwargs):
+    bar_phi_S_p = kwargs['bar_phi_S']+1e-5
+    bar_phi_S_n = kwargs['bar_phi_S']-1e-5
+    kwargs_p, kwargs_n = kwargs.copy(), kwargs.copy()
+    kwargs_p['bar_phi_S'], kwargs_n['bar_phi_S'] = bar_phi_S_p, bar_phi_S_n
+    return (h(**kwargs_p)-h(**kwargs_n))/2e-5
 
-def h_8(*args):
-    bar_mu_L_p, bar_mu_L_n = args[6]+1e-5, args[6]-1e-5
-    h_p = h(*(args[:6]+(bar_mu_L_p,)+args[7:]))
-    h_n = h(*(args[:6]+(bar_mu_L_n,)+args[7:]))
-    return (h_p-h_n)/2e-5
+def h_8(**kwargs):
+    bar_mu_L_p = kwargs['bar_mu_L']+1e-5
+    bar_mu_L_n = kwargs['bar_mu_L']-1e-5
+    kwargs_p, kwargs_n = kwargs.copy(), kwargs.copy()
+    kwargs_p['bar_mu_L'], kwargs_n['bar_mu_L'] = bar_mu_L_p, bar_mu_L_n
+    return (h(**kwargs_p)-h(**kwargs_n))/2e-5
 
-def h_9(*args):
-    bar_phi_L_p, bar_phi_L_n = args[7]+1e-5, args[7]-1e-5
-    h_p = h(*(args[:7]+(bar_phi_L_p,)+args[8:]))
-    h_n = h(*(args[:7]+(bar_phi_L_n,)+args[8:]))
-    return (h_p-h_n)/2e-5
+def h_9(**kwargs):
+    bar_phi_L_p = kwargs['bar_phi_L']+1e-5
+    bar_phi_L_n = kwargs['bar_phi_L']-1e-5
+    kwargs_p, kwargs_n = kwargs.copy(), kwargs.copy()
+    kwargs_p['bar_phi_L'], kwargs_n['bar_phi_L'] = bar_phi_L_p, bar_phi_L_n
+    return (h(**kwargs_p)-h(**kwargs_n))/2e-5
 
 def S_n(f):
     f = abs(f)
@@ -178,27 +182,34 @@ def signal2noise(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     return sqrt(square_rho)
 
 def Fisher_matrix_I(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    kwargs = {'M_1': M_1, 'M_2': M_2,
+              'bar_mu_S': bar_mu_S, 'bar_phi_S': bar_phi_S,
+              'bar_mu_L': bar_mu_L, 'bar_phi_L': bar_phi_L}
     Gamma = empty((10,10))
     for i in range(10):
         for j in range(10):
             def func_integrated(f):
-                args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-                h_I_i = eval(f'h_{i}(*((1,)+args))')
-                h_I_j = eval(f'h_{j}(*((1,)+args))')
+                kwargs['Alpha'], kwargs['f'] = 1, f
+                h_I_i = eval(f'h_{i}(**kwargs)')
+                h_I_j = eval(f'h_{j}(**kwargs)')
                 return (h_I_i.real*h_I_j.real+h_I_i.imag*h_I_j.imag)/S_n(f)
             Gamma[i,j] = 4*quad(func_integrated, 0, f_max(M_1, M_2))[0]
     return Gamma
 
 def Fisher_matrix(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
+    kwargs = {'M_1': M_1, 'M_2': M_2,
+              'bar_mu_S': bar_mu_S, 'bar_phi_S': bar_phi_S,
+              'bar_mu_L': bar_mu_L, 'bar_phi_L': bar_phi_L}
     Gamma = empty((10,10))
     for i in range(10):
         for j in range(10):
             def func_integrated(f):
-                args = (f, M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L)
-                h_I_i = eval(f'h_{i}(*((1,)+args))')
-                h_I_j = eval(f'h_{j}(*((1,)+args))')
-                h_II_i = eval(f'h_{i}(*((2,)+args))')
-                h_II_j = eval(f'h_{j}(*((2,)+args))')
+                kwargs['Alpha'], kwargs['f'] = 1, f
+                h_I_i = eval(f'h_{i}(**kwargs)')
+                h_I_j = eval(f'h_{j}(**kwargs)')
+                kwargs['Alpha'], kwargs['f'] = 2, f
+                h_II_i = eval(f'h_{i}(**kwargs)')
+                h_II_j = eval(f'h_{j}(**kwargs)')
                 return (h_I_i.real*h_I_j.real+h_I_i.imag*h_I_j.imag
                        +h_II_i.real*h_II_j.real+h_II_i.imag*h_II_j.imag)/S_n(f)
             Gamma[i,j] = 4*quad(func_integrated, 0, f_max(M_1, M_2))[0]
