@@ -222,7 +222,7 @@ def Culter(M_1, M_2, bar_mu_S, bar_phi_S, bar_mu_L, bar_phi_L):
     Sigma_I, Sigma = linalg.inv(Gamma_I), linalg.inv(Gamma)
     Delta_Omega_S_I = 2*pi*(sqrt(Sigma_I[6,6])*sqrt(Sigma_I[7,7])-Sigma_I[6,7])
     Delta_Omega_S = 2*pi*(sqrt(Sigma[6,6])*sqrt(Sigma[7,7])-Sigma[6,7])
-    Delta_ln_D_L, Delta_ln_mu = sqrt(Sigma[5,5]), sqrt(Sigma[2,2])
+    Delta_ln_D_L, Delta_ln_mu = sqrt(Sigma[5,5]), sqrt(Sigma[1,1])
     return rho_I, rho, Delta_Omega_S_I, Delta_Omega_S, Delta_ln_D_L, Delta_ln_mu
 
 
